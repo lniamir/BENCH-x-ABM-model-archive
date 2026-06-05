@@ -4,7 +4,7 @@ Welcome to the central repository for the **BENCH (The Behavioral change in ENer
 
 ## BENCH model family:
 
-![BENCH Model Family Map](./docs/BENCH_family.jpg)
+![BENCH Model Family Map](./docs/BENCH_family_v3.jpg)
 
 
 ---
