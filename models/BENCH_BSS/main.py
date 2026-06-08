@@ -1125,7 +1125,7 @@ def main():
         {"learning": "Informative-all", "infrastructure": "Dramatic", "policy": "Not-Implemented"}
     ]
 
-    num_runs = 100
+    num_runs = 3
     num_quarters = 108  # Simulate 27 years (108 quarters)
     default_seed = 0
 
