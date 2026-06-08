@@ -38,3 +38,6 @@ Thumbs.db
 .env
 .env.local
 .secret
+
+# === Netlogo genertated===
+debug.csv
