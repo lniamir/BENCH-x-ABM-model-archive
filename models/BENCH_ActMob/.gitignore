@@ -12,7 +12,8 @@ article/
 cache/
 conferences/
 figures/
-output/
+output/*.pickle 
+#want to keep the coefficients but not the output pickle files
 .virtual-documents/
 
 # Virtual environments
