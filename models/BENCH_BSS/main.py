@@ -146,13 +146,14 @@ class HouseholdAgent(Agent):
 
 
 class CommunityModel(Model):
-    def __init__(self, N, learning="No-learning", infrastructure="No-expansion", policy="Not-implemented", seed=None):
+    def __init__(self, N, learning="No-learning", infrastructure="No-expansion", policy="Not-implemented", seed=None, results_folder="results"):
         super().__init__()
         self.num_agents = N
         self.schedule = RandomActivation(self)
         self.learning = learning
         self.infrastructure = infrastructure
         self.policy = policy
+        self.results_folder = results_folder
         self.quarters = []
         self.adopters_per_quarter = []
         self.non_users_per_quarter = []
@@ -206,7 +207,7 @@ class CommunityModel(Model):
         if first_district.empty:
             print("First district not found in the dataset.")
         else:
-            print("First district found in the dataset.")
+            #print("First district found in the dataset.")
             self.first_district_polygon = unary_union(first_district.geometry)
 
         # Calculate the number of initial users (6% of total agents)
@@ -257,14 +258,14 @@ class CommunityModel(Model):
             agent.att = truncnorm((1 - 5.14) / 2.28, (7 - 5.14) / 2.28, loc=5.14,
                                   scale=2.28).rvs()  # (Wallen Warner, 2021) - attitude
 
-            print(
-                f"Agent {agent.h_id}: Age={agent.age}, Female={agent.female}, Driver's License={agent.drivers_license}, "
-                f"Access to Car={agent.access_to_car}, Education={agent.education}, Employment={agent.employment}, "
-                f"PT Card={agent.pt_card}, Awareness={agent.mob_aware}, Env Awareness={agent.env}, "
-                f"Travel Time={agent.time}, Flexibility={agent.flexibility}, Income={agent.income}, "
-                f"Children={agent.children}, Adults={agent.adults}, Cars={agent.cars}, Bikes={agent.bikes}, "
-                f"Station Access={agent.station_access}, PT Access={agent.pt_access}, Utility={agent.U}"
-            )
+            #print(
+            #    f"Agent {agent.h_id}: Age={agent.age}, Female={agent.female}, Driver's License={agent.drivers_license}, "
+            #    f"Access to Car={agent.access_to_car}, Education={agent.education}, Employment={agent.employment}, "
+            #    f"PT Card={agent.pt_card}, Awareness={agent.mob_aware}, Env Awareness={agent.env}, "
+            #    f"Travel Time={agent.time}, Flexibility={agent.flexibility}, Income={agent.income}, "
+            #    f"Children={agent.children}, Adults={agent.adults}, Cars={agent.cars}, Bikes={agent.bikes}, "
+            #    f"Station Access={agent.station_access}, PT Access={agent.pt_access}, Utility={agent.U}"
+            #)
 
         self.agent_positions = agent_positions
         self.bike_station_locations = bike_station_locations
@@ -286,18 +287,19 @@ class CommunityModel(Model):
             self.new_bike_stations = []
 
     def apply_regulatory_policy(self):
-        print(f"Applying regulatory policy in the First District in year {self.year}.")
+        #print(f"Applying regulatory policy in the First District in year {self.year}.")
         for agent in self.schedule.agents:
             if self.first_district_polygon.contains(agent.position):
                 agent.m_st = "H"
                 agent.c_st = "H"
                 agent.adopted = True
                 agent.user_status = "frequent_user"
-        print("Regulatory policy applied to First District residents.")
+        #print("Regulatory policy applied to First District residents.")
 
     def debug(self):
         if self.debugfiles:
-            with open("debug.csv", "a") as file:
+            debug_path = os.path.join(self.results_folder, "debug.csv")
+            with open(debug_path, "a") as file:
                 for agent in self.schedule.agents:
                     file.write(
                         f"{self.year}Q{self.quarter},{agent.h_id},{agent.age},{agent.female},{agent.drivers_license},{agent.access_to_car},"
@@ -346,7 +348,7 @@ class CommunityModel(Model):
                 agent.guilt = "H"
             # agent.guilt = "L" if (agent.env_aware < 4.04 or agent.mob_aware == 0) else "H"
             agent.guilt = "L" if (agent.env_aware < 3.84 or agent.mob_aware == 0) else "H"
-        print("Knowledge updated.")
+        #print("Knowledge updated.")
 
     def motivation(self):
         for agent in self.schedule.agents:
@@ -354,7 +356,7 @@ class CommunityModel(Model):
                 agent.m_st = "H"
             # agent.m_st = "L" if (agent.sn < 4.29 or agent.att < 5.75) else "H"
             agent.m_st = "L" if (agent.sn < 3.69 or agent.att < 5.15) else "H"
-        print("Motivation updated.")
+        #print("Motivation updated.")
 
     def consideration(self):
         for agent in self.schedule.agents:
@@ -382,7 +384,7 @@ class CommunityModel(Model):
                         np.random.normal(0.4, 0.2)
                 )
                 agent.c_st = "L" if (agent.U < 0) else "H"  # add PBC
-        print("Consideration updated.")
+        #print("Consideration updated.")
 
     def go(self):
         # Implement the regulatory policy scenario in 2030
@@ -392,7 +394,7 @@ class CommunityModel(Model):
         if self.quarter == 1 and self.infrastructure in ["Gradual", "Dramatic"]:
             self.expand_infrastructure()
 
-        print(f"Simulation step for year {self.year} quarter {self.quarter} started.")
+        #print(f"Simulation step for year {self.year} quarter {self.quarter} started.")
         self.schedule.step()
         # self.agents.shuffle_do("step")
 
@@ -422,7 +424,7 @@ class CommunityModel(Model):
         self.calculate_emissions()
 
         self.quarters.append(f"{self.year} Q{self.quarter}")
-        self.print_summary()
+        #self.print_summary()
 
         self.quarter += 1
         if self.quarter > 4:
@@ -460,7 +462,7 @@ class CommunityModel(Model):
             else:
                 agent.act = False
 
-        print("Actions determined for agents.")
+        #print("Actions determined for agents.")
 
     def is_demographically_similar(self, agent, neighbor):
     # Check if the neighbor is sociodemographically similar (same age and gender)
@@ -475,7 +477,7 @@ class CommunityModel(Model):
                     self.informative_learning(agent)
                 # elif self.learning in ["Informative-peer", "Informative-all"]:
 
-        print("Learning process updated.")
+        #print("Learning process updated.")
 
     def update_neighbors(self, agent, neighbors, multiplier=1):
         ngb_env_aware, ngb_att, ngb_sn = self.calculate_neighbor_means(neighbors)
@@ -572,11 +574,11 @@ class CommunityModel(Model):
         self.cumulative_emissions_savings += total_savings
 
         # Print the cumulative emissions savings
-        print(
-            f"Cumulative Emissions Savings up to Year {self.year} Quarter {self.quarter}: {self.cumulative_emissions_savings:.2f} kg")
-        print(f"Frequent Users Savings: {total_emissions_savings['frequent_user']:.2f} kg")
-        print(f"Normal Users Savings: {total_emissions_savings['user']:.2f} kg")
-        print(f"Non-Users Savings: {total_emissions_savings['non_user']:.2f} kg")
+        #print(
+        #    f"Cumulative Emissions Savings up to Year {self.year} Quarter {self.quarter}: {self.cumulative_emissions_savings:.2f} kg")
+        #print(f"Frequent Users Savings: {total_emissions_savings['frequent_user']:.2f} kg")
+        #print(f"Normal Users Savings: {total_emissions_savings['user']:.2f} kg")
+        #print(f"Non-Users Savings: {total_emissions_savings['non_user']:.2f} kg")
 
         # Save the emissions savings data for plotting
         if hasattr(self, 'emissions_savings'):
@@ -587,7 +589,7 @@ class CommunityModel(Model):
     def update_info(self):
         for agent in self.schedule.agents:
             agent.act = False
-        print("Agent info updated.")
+        #print("Agent info updated.")
 
     def get_neighbors(self, agent, num_neighbors=4):
         point = agent.position
@@ -666,9 +668,9 @@ class CommunityModel(Model):
         plt.ylabel('Northing (meters)')
         plt.title(f'Year {self.year}')
         ax.legend(ordered_handles, ordered_labels, loc='upper right')
-        plt.savefig(f'grid_{self.year}.png')
+        plt.savefig(os.path.join(self.results_folder, f'grid_{self.year}.png'))
         plt.close()
-        print(f'Grid plot saved as grid_{self.year}.png')
+        print(f'Grid plot saved as {os.path.join(self.results_folder, f"grid_{self.year}.png")}')
 
     def plot_neighborhood_grid(self):
         fig, ax = plt.subplots(figsize=(10, 10))
@@ -726,7 +728,7 @@ class CommunityModel(Model):
         plt.ylabel('Northing (meters)')
         plt.title(f'Year {self.year} Quarter {self.quarter} - Neighborhood View')
         ax.legend(ordered_handles, ordered_labels, loc='upper right')
-        plt.savefig(f'neighborhood_grid_{self.year}.png')
+        plt.savefig(os.path.join(self.results_folder, f'neighborhood_grid_{self.year}.png'))
         plt.close()
 
     def plot_emissions(self):
@@ -746,7 +748,7 @@ class CommunityModel(Model):
         plt.legend()
         plt.grid(True)
         plt.tight_layout()
-        plt.savefig('emissions_savings.png')
+        plt.savefig(os.path.join(self.results_folder, 'emissions_savings.png'))
         plt.close()
 
     def plot_adoption_rate(self):
@@ -763,9 +765,9 @@ class CommunityModel(Model):
         plt.grid(True)
         plt.xticks(rotation=45)
         plt.tight_layout()
-        plt.savefig('adoption_rate_over_time.png')
+        plt.savefig(os.path.join(self.results_folder, 'adoption_rate_over_time.png'))
         plt.close()
-        print("Adoption rate plot saved as 'adoption_rate_over_time.png'.")
+        print(f"Adoption rate plot saved as {os.path.join(self.results_folder, 'adoption_rate_over_time.png')}.")
 
     def plot_stages(self):
         # Initialize counters for each stage
@@ -787,9 +789,9 @@ class CommunityModel(Model):
         plt.title('Number of Agents in Each Stage')
         plt.grid(True)
         plt.tight_layout()
-        plt.savefig('stages_distribution.png')
+        plt.savefig(os.path.join(self.results_folder, 'stages_distribution.png'))
         plt.close()
-        print("Stages distribution plot saved as 'stages_distribution.png'.")
+        print(f"Stages distribution plot saved as {os.path.join(self.results_folder, 'stages_distribution.png')}.")
 
     def expand_infrastructure(self):
         if self.infrastructure == "Gradual":
@@ -798,12 +800,12 @@ class CommunityModel(Model):
                 new_stations_gdf = gpd.GeoDataFrame({'geometry': new_stations_this_year},
                                                     crs=self.bike_station_locations.crs)
 
-                print(f"Year {self.year}: Adding {len(new_stations_gdf)} new bike stations.")
+                #print(f"Year {self.year}: Adding {len(new_stations_gdf)} new bike stations.")
 
                 self.bike_station_locations = pd.concat([self.bike_station_locations, new_stations_gdf]).reset_index(
                     drop=True)
 
-                print(f"Total number of bike stations after addition: {len(self.bike_station_locations)}")
+                #print(f"Total number of bike stations after addition: {len(self.bike_station_locations)}")
 
                 self.update_station_access()
 
@@ -836,8 +838,8 @@ class CommunityModel(Model):
 
         num_agents_with_access_after = sum(agent.station_access for agent in self.schedule.agents)
         # Debug: print the change in number of agents with access
-        print(
-            f"Updated station access for agents. Number of agents with access before: {num_agents_with_access_before}, after: {num_agents_with_access_after}")
+        #print(
+        #    f"Updated station access for agents. Number of agents with access before: {num_agents_with_access_before}, after: {num_agents_with_access_after}")
 
     def update_social_norms_population_based(self):
         # Calculate the overall adoption rate of the population
@@ -856,7 +858,7 @@ class CommunityModel(Model):
                 # Cap SN at the maximum value of 7
                 agent.sn = min(agent.sn, 7)
 
-        print("Social norms updated based on overall population adoption rate.")
+        #print("Social norms updated based on overall population adoption rate.")
 
     def print_summary(self):
         num_agents_act = sum(agent.act for agent in self.schedule.agents)
@@ -902,9 +904,9 @@ class CommunityModel(Model):
         plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
         plt.xticks(rotation=45)
         plt.tight_layout()
-        plt.savefig('user_status_over_time.png')
+        plt.savefig(os.path.join(self.results_folder, 'user_status_over_time.png'))
         plt.close()
-        print("User status plot saved as 'user_status_over_time.png'.")
+        print(f"User status plot saved as {os.path.join(self.results_folder, 'user_status_over_time.png')}.")
 
     def save_agent_states(self):
         self.saved_agent_states = []
@@ -967,9 +969,9 @@ class CommunityModel(Model):
         plt.ylabel('Northing (meters)')
         plt.title('Social Network of 10 Random Agents and Their Neighbors')
         ax.legend(loc='upper right')
-        plt.savefig(f'social_network_{self.year}_Q{self.quarter}.png')
+        plt.savefig(os.path.join(self.results_folder, f'social_network_{self.year}_Q{self.quarter}.png'))
         plt.close()
-        print(f'Social network plot saved as social_network_{self.year}_Q{self.quarter}.png')
+        print(f'Social network plot saved as {os.path.join(self.results_folder, f"social_network_{self.year}_Q{self.quarter}.png")}')
 
     def calculate_adopters_per_district(self):
         district_adoption = []
@@ -999,17 +1001,21 @@ class CommunityModel(Model):
 
 def main():
     args = parse_args()
+    
+    # Create results folder if it doesn't exist
+    results_folder = "results"
+    os.makedirs(results_folder, exist_ok=True)
 
     settings = [
         {"learning": "Informative-all", "infrastructure": "Gradual", "policy": "Not-Implemented"},
-        #{"learning": "Informative-all", "infrastructure": "No-expansion", "policy": "Implemented"},
-        #{"learning": "No-learning", "infrastructure": "No-expansion", "policy": "Not-Implemented"},
-        #{"learning": "No-learning", "infrastructure": "Gradual", "policy": "Not-Implemented"},
+        {"learning": "Informative-all", "infrastructure": "No-expansion", "policy": "Implemented"},
+        {"learning": "No-learning", "infrastructure": "No-expansion", "policy": "Not-Implemented"},
+        {"learning": "No-learning", "infrastructure": "Gradual", "policy": "Not-Implemented"},
         {"learning": "No-learning", "infrastructure": "No-expansion", "policy": "Implemented"},
-        #{"learning": "Informative-all", "infrastructure": "Dramatic", "policy": "Not-Implemented"}
+        {"learning": "Informative-all", "infrastructure": "Dramatic", "policy": "Not-Implemented"}
     ]
 
-    num_runs = 3#100
+    num_runs = 100
     num_quarters = 108  # Simulate 27 years (108 quarters)
     default_seed = 0
 
@@ -1035,9 +1041,11 @@ def main():
                 learning=setting["learning"],
                 infrastructure=setting["infrastructure"],
                 policy=setting["policy"],
-                seed=seed
+                seed=seed,
+                results_folder=results_folder
             )
 
+            
             for quarter in range(num_quarters):
                 model.go()
                 all_adoption_rates[run, quarter] = model.adoption_rate_per_quarter[-1]
@@ -1119,11 +1127,11 @@ def main():
         district_adoption_df = pd.DataFrame(district_adoption_rows)  # Convert district adoption data to DataFrame
 
         # Append to existing files or create new ones if they don't exist
-        append_or_create_csv(adoption_rate_df, 'adoption_rate_combined.csv')
-        append_or_create_csv(emissions_savings_df, 'emissions_savings_combined.csv')
-        append_or_create_csv(user_status_df, 'user_status_combined.csv')
-        append_or_create_csv(stage_df, 'stage_combined.csv')
-        append_or_create_csv(district_adoption_df, 'district_adoption_combined.csv')  # Save district adoption data
+        append_or_create_csv(adoption_rate_df, os.path.join(results_folder, 'adoption_rate_combined.csv'))
+        append_or_create_csv(emissions_savings_df, os.path.join(results_folder, 'emissions_savings_combined.csv'))
+        append_or_create_csv(user_status_df, os.path.join(results_folder, 'user_status_combined.csv'))
+        append_or_create_csv(stage_df, os.path.join(results_folder, 'stage_combined.csv'))
+        append_or_create_csv(district_adoption_df, os.path.join(results_folder, 'district_adoption_combined.csv'))  # Save district adoption data
 
     print("Simulation and data saving complete for all scenarios.")
 
