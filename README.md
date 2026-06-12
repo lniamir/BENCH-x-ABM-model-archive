@@ -1,6 +1,6 @@
 # BENCH Model Family Archive
 
-Welcome to the central repository for the **BENCH (The Behavioral change in ENergy Consumption of Households)** model family. This archive preserves, documents, and provides download access to various iterations of the BENCH framework.
+Welcome to the central repository for the **BENCH (The Behavioral change in ENergy Consumption of Households)** model family. This archive preserves, documents, and provides download access to various iterations of the BENCH framework. 
 
 ## BENCH model family:
 
@@ -9,7 +9,7 @@ Welcome to the central repository for the **BENCH (The Behavioral change in ENer
 
 ---
 
-## Active Code Repository Summary
+## Active Code Repository Summary 
 
 | Model Directory | Language | Associated publication |
 | :--- | :--- | :--- |
