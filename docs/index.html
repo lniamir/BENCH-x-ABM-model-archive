@@ -157,24 +157,28 @@
     <img src="BENCH_Family_Models_diagram.svg" alt="BENCH Model Family Diagram" id="diagram-img">
 
     <!--
-      Hotspot positions are percentages derived from the SVG viewBox (978 × 911).
-      Each rect: x/978 = left%, y/911 = top%, w/978 = width%, h/911 = height%
+      Hotspot positions are percentages derived from the SVG viewBox (1028 × 880).
+      Each rect: x/1028 = left%, y/880 = top%, w/1028 = width%, h/880 = height%
     -->
     <div class="hotspot" data-model="actmob"
-         style="left:54.91%; top:0.11%; width:12.27%; height:6.59%">
+         style="left:55.64%; top:0.68%; width:11.67%; height:6.82%">
       <span class="hotspot-label">BENCH_ActMob</span>
     </div>
     <div class="hotspot" data-model="bss"
-         style="left:21.17%; top:0.11%; width:12.27%; height:6.59%">
+         style="left:23.54%; top:0.68%; width:11.67%; height:6.82%">
       <span class="hotspot-label">BENCH_BSS</span>
     </div>
     <div class="hotspot" data-model="v2"
-         style="left:38.55%; top:90.12%; width:12.27%; height:6.59%">
+         style="left:40.08%; top:87.05%; width:11.67%; height:6.82%">
       <span class="hotspot-label">BENCH_v.2</span>
     </div>
     <div class="hotspot" data-model="v4"
-         style="left:69.22%; top:90.12%; width:12.27%; height:6.59%">
+         style="left:69.26%; top:87.05%; width:11.67%; height:6.82%">
       <span class="hotspot-label">BENCH_v.4</span>
+    </div>
+    <div class="hotspot" data-model="ec"
+         style="left:70.23%; top:31.36%; width:11.67%; height:6.82%">
+      <span class="hotspot-label">BENCH_EC</span>
     </div>
   </div>
 
@@ -231,6 +235,14 @@
         </a></td>
         <td><a href="https://github.com/lniamir/bench-model-archive/releases/download/v1.0/BENCH_ActMob_clean.zip" target="_blank">Download</a></td>
       </tr>
+      <tr>
+        <td><strong>BENCH_EC</strong></td>
+        <td>Python</td>
+        <td><a href="https://doi.org/10.1016/j.erss.2025.104523" target="_blank">
+          Energy community potential model (2025)
+        </a></td>
+        <td><a href="https://github.com/NEON-Research/Energy-community-potential-model" target="_blank">GitHub</a></td>
+      </tr>
     </tbody>
   </table>
 
@@ -279,6 +291,17 @@
         },
         download: RELEASE_BASE + 'BENCH_v4_clean.zip',
       },
+      ec: {
+        title: 'BENCH_EC',
+        lang: 'Python',
+        desc: 'Models the potential for energy communities to aggregate household flexibility and participate in energy markets.',
+        paper: {
+          label: 'Energy community potential model (2025)',
+          url: 'https://doi.org/10.1016/j.erss.2025.104523',
+        },
+        download: null,
+        repo: 'https://github.com/NEON-Research/Energy-community-potential-model',
+      },
     };
 
     const overlay  = document.getElementById('modal-overlay');
@@ -293,12 +316,23 @@
       const linksEl = document.getElementById('modal-links');
       linksEl.innerHTML = '';
 
-      const dl = document.createElement('a');
-      dl.href      = m.download;
-      dl.target    = '_blank';
-      dl.className = 'btn btn-download';
-      dl.textContent = 'Download code';
-      linksEl.appendChild(dl);
+      if (m.download) {
+        const dl = document.createElement('a');
+        dl.href       = m.download;
+        dl.target     = '_blank';
+        dl.className  = 'btn btn-download';
+        dl.textContent = 'Download code';
+        linksEl.appendChild(dl);
+      }
+
+      if (m.repo) {
+        const repo = document.createElement('a');
+        repo.href       = m.repo;
+        repo.target     = '_blank';
+        repo.className  = 'btn btn-download';
+        repo.textContent = 'View code on GitHub';
+        linksEl.appendChild(repo);
+      }
 
       if (m.paper.url) {
         const paper = document.createElement('a');
