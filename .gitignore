@@ -1,6 +1,9 @@
 # Local release zip copies
 models/releases/
 
+# VS Code Jupyter virtual documents
+.virtual_documents/
+
 # Python virtual environments
 .venv/
 venv/
