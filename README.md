@@ -17,7 +17,7 @@ Welcome to the central repository for the **BENCH (The Behavioral change in ENer
 | [**BENCH_BSS**](./models/BENCH_BSS) | Python (Mesa) | Modelling bike-sharing service adoption in urban areas: a case study of Vienna (2024) |
 | [**BENCH_v.4**](./models/BENCH_v04) | NetLogo | [Energizing building renovation: Unraveling the dynamic interplay of building stock evolution, individual behaviour, and social norms (2024)](https://www.sciencedirect.com/science/article/pii/S2214629624000367) |
 | [**BENCH_ActMob**](./models/BENCH_ActMob) | Python (Mesa) | [Urban Strategies for Active Mobility in Vienna (2026)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6604470) |
-| [**BENCH_EC**](https://github.com/NEON-Research/Energy-community-potential-model) | Python | [Energy community potential model (2025)](https://doi.org/10.1016/j.erss.2025.104523) |
+| [**BENCH_EC**](https://github.com/NEON-Research/Energy-community-potential-model) | AnyLogic | [Quantifying the potential of energy communities in renewable electricity generation in The Netherlands (2026)](https://doi.org/10.1016/j.erss.2025.104523) |
 
 
 ---
@@ -37,11 +37,15 @@ Instead, this project utilizes isolated **GitHub Releases**:
 
 ```text
 bench-model-archive/
-├── docs/                   # GitHub Pages web deployment files
-│   ├── index.md            # Website landing page
-│   └── image_e61c41.png    # Model interconnections diagram
-└── models/                 # Contained model directories
-    ├── BENCH_v.2/          # NetLogo
-    ├── BENCH_BSS/          # Python Mesa bike-sharing model
-    ├── BENCH_v.4/          # NetLogo MESSAGEix integration
-    ├── BENCH_ActMob/       # Python Mesa active mobility model
+├── docs/                              # GitHub Pages website
+│   ├── index.html                     # Website landing page
+│   ├── BENCH_Family_Models_diagram.svg   # Model family diagram
+│   └── BENCH_Family_Models_diagram.drawio  # Editable diagram source
+├── models/                            # Contained model directories
+│   ├── BENCH_v.2/                     # NetLogo
+│   ├── BENCH_BSS/                     # Python (Mesa) — bike-sharing
+│   ├── BENCH_v.4/                     # NetLogo — building renovation
+│   ├── BENCH_ActMob/                  # Python (Mesa) — active mobility
+├── .gitignore
+├── ADDING_A_MODEL.md                  # Guide for adding new models
+└── README.md
