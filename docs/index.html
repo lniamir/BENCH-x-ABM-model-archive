@@ -348,10 +348,11 @@
       v4py: {
         title: 'BENCH_v.4_py',
         lang: 'Python',
-        desc: 'A Python translation of BENCH_v.4, recoding the NetLogo model for future proofing.',
+        desc: 'A Python translation of BENCH_v.4, recoding the NetLogo building renovation model to improve extensibility and interoperability with scientific computing libraries. It retains the coupled agent-based and integrated assessment modelling framework that analyses how diversity in renovation decisions, social dynamics, and building stock evolution interact to shape residential energy demand.',
         paper: null,
         download: null,
         repo: 'https://github.com/danielTorren/bench_py_v4',
+        demo: 'demo.html',
       },
       ec: {
         title: 'BENCH_EC',
@@ -394,6 +395,14 @@
         repo.className  = 'btn btn-download';
         repo.textContent = 'View code on GitHub';
         linksEl.appendChild(repo);
+      }
+
+      if (m.demo) {
+        const demo = document.createElement('a');
+        demo.href       = m.demo;
+        demo.className  = 'btn btn-download';
+        demo.textContent = 'Try interactive demo →';
+        linksEl.appendChild(demo);
       }
 
       if (m.paper && m.paper.url) {
