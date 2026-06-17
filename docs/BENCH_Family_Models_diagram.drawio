@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net">
   <diagram name="Page-1" id="D8S6M9mlrGoE-fLch0l4">
-    <mxGraphModel dx="2020" dy="1061" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1285" dy="675" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -88,7 +88,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="OnS6I9qU9okV_MXKLkM--5" parent="bsP-j-epePcErdXESkcG-16" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=16;" value="Model Soft Coupling" vertex="1">
-          <mxGeometry height="60" width="120" x="190" y="300" as="geometry" />
+          <mxGeometry height="60" width="120" x="200" y="300" as="geometry" />
         </mxCell>
         <mxCell id="OnS6I9qU9okV_MXKLkM--40" edge="1" parent="bsP-j-epePcErdXESkcG-16" source="OnS6I9qU9okV_MXKLkM--6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=16;" target="OnS6I9qU9okV_MXKLkM--9" value="">
           <mxGeometry relative="1" as="geometry" />
