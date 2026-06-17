@@ -161,31 +161,35 @@
       Each rect: x/1028 = left%, y/880 = top%, w/1028 = width%, h/880 = height%
     -->
     <div class="hotspot" data-model="actmob"
-         style="left:55.64%; top:0.68%; width:11.67%; height:6.82%">
+         style="left:55.11%; top:0.62%; width:11.56%; height:6.23%">
       <span class="hotspot-label">BENCH_ActMob</span>
     </div>
     <div class="hotspot" data-model="bss"
-         style="left:23.54%; top:0.68%; width:11.67%; height:6.82%">
+         style="left:23.31%; top:0.62%; width:11.56%; height:6.23%">
       <span class="hotspot-label">BENCH_BSS</span>
     </div>
     <div class="hotspot" data-model="v1"
-         style="left:25.49%; top:87.05%; width:11.67%; height:6.82%">
+         style="left:10.79%; top:82.66%; width:11.56%; height:6.23%">
       <span class="hotspot-label">BENCH_v.1</span>
     </div>
     <div class="hotspot" data-model="v2"
-         style="left:40.08%; top:87.05%; width:11.67%; height:6.82%">
+         style="left:30.06%; top:82.66%; width:11.56%; height:6.23%">
       <span class="hotspot-label">BENCH_v.2</span>
     </div>
     <div class="hotspot" data-model="v3"
-         style="left:54.67%; top:87.05%; width:11.67%; height:6.82%">
+         style="left:49.33%; top:82.66%; width:11.56%; height:6.23%">
       <span class="hotspot-label">BENCH_v.3</span>
     </div>
     <div class="hotspot" data-model="v4"
-         style="left:69.26%; top:87.05%; width:11.67%; height:6.82%">
+         style="left:68.59%; top:82.66%; width:11.56%; height:6.23%">
       <span class="hotspot-label">BENCH_v.4</span>
     </div>
+    <div class="hotspot" data-model="v4py"
+         style="left:76.30%; top:93.04%; width:11.56%; height:6.23%">
+      <span class="hotspot-label">BENCH_v.4_py</span>
+    </div>
     <div class="hotspot" data-model="ec"
-         style="left:70.23%; top:31.36%; width:11.67%; height:6.82%">
+         style="left:71.48%; top:31.78%; width:11.56%; height:6.23%">
       <span class="hotspot-label">BENCH_EC</span>
     </div>
   </div>
@@ -258,6 +262,12 @@
           Urban Strategies for Active Mobility in Vienna (2026)
         </a></td>
         <td><a href="https://github.com/lniamir/bench-model-archive/releases/download/v1.0/BENCH_ActMob_clean.zip" target="_blank">Download</a></td>
+      </tr>
+      <tr>
+        <td><strong>BENCH_v.4_py</strong></td>
+        <td>Python</td>
+        <td>—</td>
+        <td><a href="https://github.com/danielTorren/bench_py_v4" target="_blank">GitHub</a></td>
       </tr>
       <tr>
         <td><strong>BENCH_EC</strong></td>
@@ -335,6 +345,14 @@
         },
         download: RELEASE_BASE + 'BENCH_v4_clean.zip',
       },
+      v4py: {
+        title: 'BENCH_v.4_py',
+        lang: 'Python',
+        desc: 'A Python translation of BENCH_v.4, recoding the NetLogo building renovation model to improve extensibility and interoperability with scientific computing libraries. It retains the coupled agent-based and integrated assessment modelling framework that analyses how diversity in renovation decisions, social dynamics, and building stock evolution interact to shape residential energy demand.',
+        paper: null,
+        download: null,
+        repo: 'https://github.com/danielTorren/bench_py_v4',
+      },
       ec: {
         title: 'BENCH_EC',
         lang: 'AnyLogic',
@@ -378,7 +396,7 @@
         linksEl.appendChild(repo);
       }
 
-      if (m.paper.url) {
+      if (m.paper && m.paper.url) {
         const paper = document.createElement('a');
         paper.href      = m.paper.url;
         paper.target    = '_blank';
@@ -386,7 +404,7 @@
         paper.title     = m.paper.label;
         paper.textContent = 'View paper';
         linksEl.appendChild(paper);
-      } else {
+      } else if (m.paper) {
         const paper = document.createElement('span');
         paper.className   = 'btn btn-paper unavailable';
         paper.textContent = 'Paper coming soon';
