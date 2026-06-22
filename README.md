@@ -53,3 +53,26 @@ bench-model-archive/
 ├── .gitignore
 ├── ADDING_A_MODEL.md                  # Guide for adding new models
 └── README.md
+
+## Citation
+
+@article{niamir2018transition,
+  title={Transition to low-carbon economy: Assessing cumulative impacts of individual behavioral changes},
+  author={Niamir, Leila and Filatova, Tatiana and Voinov, Alexey and Bressers, Hans},
+  journal={Energy policy},
+  volume={118},
+  pages={325--345},
+  year={2018},
+  publisher={Elsevier},
+  doi     = {10.1016/j.enpol.2018.03.045},
+  url     = {https://doi.org/10.1016/j.enpol.2018.03.045}
+}
+
+@software{bench_models_archive_2026,
+  title  = {BENCH: An Open-Source Model Archive},
+  author = {Leila Niamir},
+  year   = {2026},
+  version = {1.0.1},
+  doi    = {10.5281/zenodo.20798923},
+  url    = {https://github.com/BENCH-Models/bench-model-archive}
+}
