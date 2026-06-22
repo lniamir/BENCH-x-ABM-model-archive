@@ -53,6 +53,8 @@ bench-model-archive/
 ├── .gitignore
 ├── ADDING_A_MODEL.md                  # Guide for adding new models
 └── README.md
+```
+---
 
 ## Citation
 
