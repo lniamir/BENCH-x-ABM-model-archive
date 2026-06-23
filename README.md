@@ -1,6 +1,6 @@
 # BENCH Model Family Archive
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20798923.svg)](https://doi.org/10.5281/zenodo.20798923)
+[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.20798923.svg)](https://doi.org/10.5281/zenodo.20798923)
 
 Welcome to the central repository for the **BENCH (The Behavioral change in ENergy Consumption of Households)** model family. This archive preserves, documents, and provides download access to various iterations of the BENCH framework. 
 
@@ -78,7 +78,7 @@ If you use this archive or any of the models included, please cite both the foun
 
 @software{bench_models_archive_2026,
   title  = {BENCH: An Open-Source Model Archive},
-  author = {Leila Niamir},
+  author = {Niamir, Leila},
   year   = {2026},
   version = {1.0.1},
   doi    = {10.5281/zenodo.20798923},
