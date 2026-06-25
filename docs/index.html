@@ -113,7 +113,8 @@
       margin-bottom: 1rem;
     }
     .modal p { color: #444; margin: 0 0 1.2rem; }
-    #modal-authors { font-size: 0.88rem; color: #6b7280; font-style: italic; margin-top: -0.6rem; }
+    #modal-authors { font-size: 0.88rem; color: #6b7280; font-style: italic; margin-top: -0.6rem; margin-bottom: 0.25rem; }
+    #modal-doi { font-size: 0.82rem; color: #6b7280; margin-top: 0; }
 
     .modal-links { display: flex; gap: 0.75rem; flex-wrap: wrap; }
     .btn {
@@ -130,6 +131,7 @@
     .btn-paper   { background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; }
     .btn-paper.unavailable { color: #9ca3af; cursor: default; }
     .btn-paper.unavailable:hover { opacity: 1; }
+    .btn-zenodo  { background: #024b7a; color: #fff; }
 
     /* Model table */
     hr { border: none; border-top: 1px solid #ddd; margin: 2.5rem 0; }
@@ -208,6 +210,7 @@
       <span class="lang-tag" id="modal-lang"></span>
       <p id="modal-desc"></p>
       <p id="modal-authors"></p>
+      <p id="modal-doi"></p>
       <div class="modal-links" id="modal-links"></div>
     </div>
   </div>
@@ -302,6 +305,7 @@
           url: 'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6604470',
         },
         download: RELEASE_BASE + 'BENCH_ActMob_clean.zip',
+        doi: 'https://doi.org/10.5281/zenodo.20847261',
       },
       bss: {
         title: 'BENCH_BSS',
@@ -313,6 +317,7 @@
           url: null,
         },
         download: RELEASE_BASE + 'BENCH_BSS_clean.zip',
+        doi: 'https://doi.org/10.5281/zenodo.20847272',
       },
       v1: {
         title: 'BENCH_Buildings_v.1',
@@ -335,6 +340,7 @@
           url: 'https://link.springer.com/article/10.1007/s10584-019-02566-8',
         },
         download: RELEASE_BASE + 'BENCH_v2_clean.zip',
+        doi: 'https://doi.org/10.5281/zenodo.20847236',
       },
       v3: {
         title: 'BENCH_Buildings_v.3',
@@ -346,6 +352,7 @@
           url: 'https://doi.org/10.1016/j.envsoft.2020.104839',
         },
         download: RELEASE_BASE + 'BENCH_v3_clean.zip',
+        doi: 'https://doi.org/10.5281/zenodo.20847246',
       },
       v4: {
         title: 'BENCH_Buildings_v.4',
@@ -357,6 +364,7 @@
           url: 'https://doi.org/10.1016/j.erss.2024.103445',
         },
         download: RELEASE_BASE + 'BENCH_v4_clean.zip',
+        doi: 'https://doi.org/10.5281/zenodo.20847255',
       },
       v4py: {
         title: 'BENCH_Buildings_v.4_py',
@@ -396,6 +404,22 @@
         authorsEl.style.display = '';
       } else {
         authorsEl.style.display = 'none';
+      }
+
+      const doiEl = document.getElementById('modal-doi');
+      if (m.doi) {
+        doiEl.innerHTML = '';
+        const doiLabel = document.createTextNode('Code DOI: ');
+        const doiLink = document.createElement('a');
+        doiLink.href   = m.doi;
+        doiLink.target = '_blank';
+        doiLink.style.color = '#1d4ed8';
+        doiLink.textContent = m.doi.replace('https://doi.org/', '');
+        doiEl.appendChild(doiLabel);
+        doiEl.appendChild(doiLink);
+        doiEl.style.display = '';
+      } else {
+        doiEl.style.display = 'none';
       }
 
       const linksEl = document.getElementById('modal-links');
@@ -440,6 +464,15 @@
         paper.className   = 'btn btn-paper unavailable';
         paper.textContent = 'Paper coming soon';
         linksEl.appendChild(paper);
+      }
+
+      if (m.doi) {
+        const zenodo = document.createElement('a');
+        zenodo.href       = m.doi;
+        zenodo.target     = '_blank';
+        zenodo.className  = 'btn btn-zenodo';
+        zenodo.textContent = 'Zenodo record';
+        linksEl.appendChild(zenodo);
       }
 
       overlay.classList.add('open');
